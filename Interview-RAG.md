@@ -1354,6 +1354,410 @@ Never build GenAI around one vendor — **design for model interchangeability** 
 | Compliance          | Human-in-loop + explainability  | Trust = autonomy with oversight        |
 
 ---
+Looking at this excellent Q&A set, I can see it's comprehensive and well-structured. Let me augment it with additional cutting-edge topics and nuanced scenarios that would truly differentiate exceptional GenAI architects in 2025.
 
+---
+
+## 🔥 **AUGMENTED GENAI SOLUTION ARCHITECT Q&A SET**
+### *Additional Questions (Q61-Q100) - Next-Level Architecture*
+
+---
+
+### 🔹 XIV. Advanced Agentic Patterns & Orchestration
+
+**61. What's the difference between reactive and proactive agents?**  
+✅ **Answer:**
+- **Reactive agents**: Respond to explicit user requests or triggers
+- **Proactive agents**: Monitor state/context and autonomously initiate actions
+- Example: A proactive support agent that detects anomalies in logs and creates tickets before users report issues
+- Architecture requires event streaming (Kafka/Kinesis) + continuous state monitoring
+
+**62. How do you implement agent memory hierarchy (short-term vs long-term)?**  
+✅ **Answer:**
+- **Short-term memory**: In-session context (Redis, conversation buffer)
+- **Long-term memory**: Persistent knowledge across sessions (Vector DB with user/session metadata)
+- **Working memory**: Current reasoning trace (ephemeral, agent-local)
+- Pattern: Use memory routing policies based on recency, relevance, and importance scores
+
+**63. What's "agent reflection" and why is it critical?**  
+✅ **Answer:**  
+Agent reflection = self-evaluation mechanism where agents assess their own outputs before finalizing.  
+Example: "Does my answer contradict retrieved context? Is confidence score adequate?"  
+Implemented via:
+- Self-critique prompts
+- Validation agents in multi-agent systems
+- Confidence thresholding with fallback logic
+
+**64. How do you prevent agent "tunnel vision" in complex workflows?**  
+✅ **Answer:**  
+Tunnel vision = agent over-optimizes for one sub-goal, ignoring broader context.  
+Mitigation:
+- Goal hierarchy with priority weights
+- Regular context refresh from planning agent
+- Timeout-based re-planning triggers
+- Cross-agent goal alignment checks
+
+**65. What's the role of "meta-agents" in enterprise systems?**  
+✅ **Answer:**  
+Meta-agents = orchestrators that manage other agents' lifecycle, resource allocation, and priority.  
+Capabilities:
+- Agent spawning/termination based on workload
+- Performance monitoring and adaptive routing
+- Conflict resolution between competing agents
+- Think of it as Kubernetes for agents
+
+---
+
+### 🔹 XV. Advanced RAG Architectures
+
+**66. What's "Hypothetical Document Embeddings" (HyDE) and when to use it?**  
+✅ **Answer:**  
+HyDE = Generate a hypothetical answer first, embed it, then retrieve similar real documents.  
+Use when:
+- User queries are abstract or poorly formed
+- You need semantic expansion beyond keywords
+- Domain requires conceptual rather than literal matching
+
+**67. How do you handle contradictory information in retrieved contexts?**  
+✅ **Answer:**
+- Implement **confidence-weighted fusion**: newer/authoritative sources get higher weight
+- Add **temporal metadata**: prioritize recent documents for time-sensitive topics
+- Use **multi-answer synthesis**: present multiple perspectives with source attribution
+- Deploy **fact-checking layer**: cross-validate claims across sources
+
+**68. What's "agentic RAG" and how does it differ from standard RAG?**  
+✅ **Answer:**  
+Standard RAG = fixed pipeline (retrieve → generate)  
+Agentic RAG = agent decides:
+- Whether to retrieve
+- Which knowledge source to query
+- How many iterations of retrieval needed
+- When to stop and synthesize  
+Implemented via tool-calling and recursive decision trees
+
+**69. How do you design RAG for multi-hop reasoning?**  
+✅ **Answer:**  
+Multi-hop = answer requires chaining facts across documents.  
+Architecture:
+- **Iterative retrieval**: Retrieve → extract entities → retrieve again
+- **Graph-augmented RAG**: Use knowledge graphs for relationship traversal
+- **Chain-of-thought retrieval**: Generate intermediate questions for each hop
+- Example: "Who was the CEO of the company that acquired Slack in 2020?" → hop 1: find acquirer, hop 2: find CEO
+
+**70. What's the role of "semantic routers" in RAG systems?**  
+✅ **Answer:**  
+Semantic routers classify intent and direct queries to appropriate:
+- Knowledge bases (legal vs technical vs HR)
+- Retrieval strategies (vector vs keyword vs graph)
+- LLM endpoints (complex reasoning vs simple lookup)  
+Reduces noise and improves precision by pre-filtering domain scope
+
+---
+
+### 🔹 XVI. Model Selection & Optimization
+
+**71. How do you decide between on-premise and API-based LLMs?**  
+✅ **Answer:**  
+**Use on-premise when:**
+- Data sovereignty requirements (GDPR, HIPAA)
+- High request volume makes APIs expensive
+- Need <100ms latency  
+
+**Use API-based when:**
+- Rapid prototyping phase
+- Variable/unpredictable load
+- Access to frontier models is critical  
+
+**Hybrid pattern**: API for complex reasoning, on-prem for high-volume simple tasks
+
+**72. What's "mixture-of-experts" routing in production?**  
+✅ **Answer:**  
+Route different request types to specialized models:
+- GPT-4 for creative/complex reasoning
+- Claude for long-context analysis
+- Local Llama for high-volume, simple classification  
+Requires intent classifier + cost/latency optimizer
+
+**73. How do you evaluate whether fine-tuning is worth it vs prompt engineering?**  
+✅ **Answer:**  
+**Fine-tune when:**
+- Task is repetitive with clear patterns (>1000 examples)
+- Prompt engineering plateaus in quality
+- Latency/cost of large prompts becomes prohibitive  
+
+**Stick to prompting when:**
+- Task variety is high
+- Data is sparse or evolving
+- Need rapid iteration  
+
+**ROI calculation**: Fine-tuning cost vs (tokens saved × volume × price)
+
+**74. What's "speculative decoding" and its relevance?**  
+✅ **Answer:**  
+Technique where a small, fast model generates candidate tokens, then a large model verifies them in parallel.  
+Result: 2-3× speedup for generation-heavy tasks.  
+Relevant for: streaming responses, high-throughput summarization, real-time agents
+
+**75. How do you handle model deprecation in production systems?**  
+✅ **Answer:**
+- **Version abstraction layer**: API that maps logical model names to physical endpoints
+- **Shadow deployment**: Run new model in parallel, compare outputs
+- **Gradual rollover**: Route increasing % of traffic to new model
+- **Regression testing suite**: Automated evaluation before cutover
+- **Rollback plan**: Quick revert mechanism if metrics degrade
+
+---
+
+### 🔹 XVII. Security, Privacy & Compliance
+
+**76. How do you implement data residency in multi-region GenAI systems?**  
+✅ **Answer:**
+- **Region-specific vector DBs**: EU data in EU clusters
+- **Geo-routing**: API gateway directs requests based on origin
+- **Federated retrieval**: Aggregate results without data movement
+- **Audit trails**: Log data access location for compliance proof
+
+**77. What's differential privacy in LLM context and how to implement?**  
+✅ **Answer:**  
+Technique ensuring individual training examples can't be extracted from model outputs.  
+Implementation:
+- Add noise during fine-tuning
+- Limit memorization via training epochs
+- Use privacy budgets (ε-δ parameters)  
+Relevant for: Healthcare, financial services with sensitive data
+
+**78. How do you prevent model inversion attacks?**  
+✅ **Answer:**  
+Attack = reconstructing training data from model behavior.  
+Prevention:
+- Output filtering (don't return verbatim training text)
+- Rate limiting on API queries
+- Watermarking training data to detect leakage
+- Regular model audits for memorization
+
+**79. What's "model card" and why is it critical for governance?**  
+✅ **Answer:**  
+Model card = standardized documentation including:
+- Training data sources, biases, limitations
+- Intended use cases and boundaries
+- Performance metrics across demographics
+- Ethical considerations  
+Required for: Enterprise AI governance, regulatory compliance, transparency
+
+**80. How do you implement "right to explanation" for GenAI decisions?**  
+✅ **Answer:**
+- Store complete reasoning traces (retrieved context + prompt + response)
+- Add attribution mechanisms (citations, confidence scores)
+- Provide alternative explanations for rejected actions
+- Enable replay/audit capability for every decision
+- Use interpretability tools (attention visualization, token attribution)
+
+---
+
+### 🔹 XVIII. Advanced Evaluation & Testing
+
+**81. What's "adversarial testing" for GenAI systems?**  
+✅ **Answer:**  
+Deliberately attempt to break the system via:
+- Prompt injection attacks
+- Contradictory context insertion
+- Edge-case queries (multilingual, ambiguous)
+- Load/stress testing for race conditions  
+Tools: Red-teaming frameworks, automated adversarial generators
+
+**82. How do you measure "calibration" of LLM confidence scores?**  
+✅ **Answer:**  
+Calibration = alignment between stated confidence and actual correctness.  
+Measurement:
+- Plot predicted confidence vs empirical accuracy
+- Perfect calibration = diagonal line
+- Use Expected Calibration Error (ECE) metric  
+Improve via: temperature tuning, confidence re-calibration layers
+
+**83. What's "concept drift" in GenAI and how to detect it?**  
+✅ **Answer:**  
+Concept drift = change in relationship between inputs and expected outputs over time.  
+Example: "Recession" means different things in 2020 vs 2025  
+Detection:
+- Monitor retrieval quality metrics over time
+- Track user satisfaction trends
+- Compare current vs baseline embeddings for same queries
+- Automated drift detection pipelines (e.g., Evidently AI)
+
+**84. How do you create synthetic evaluation datasets?**  
+✅ **Answer:**
+- Use LLMs to generate question-answer pairs from documents
+- Apply filtering for quality (semantic coherence, factuality)
+- Include negative examples (unanswerable questions)
+- Augment with human-validated samples
+- Tools: RAGAS synthetic data generation, custom pipelines
+
+**85. What's "human-in-the-loop evaluation" architecture?**  
+✅ **Answer:**  
+System where human reviewers provide ongoing feedback:
+- Sample high-uncertainty predictions for review
+- Aggregate feedback to retrain rankers/retrievers
+- A/B test prompt variations with human judges
+- Close feedback loop: review → adjust → deploy → monitor  
+Implementation: Annotation platforms (Scale AI, Labelbox) + CI/CD integration
+
+---
+
+### 🔹 XIX. Production Operations & Reliability
+
+**86. What's your approach to "canary deployments" for GenAI models?**  
+✅ **Answer:**
+- Deploy new model/prompt to small % of traffic (5-10%)
+- Monitor key metrics: latency, quality scores, error rates
+- Gradually increase traffic if metrics stable
+- Automated rollback if degradation detected
+- A/B testing framework for statistical comparison
+
+**87. How do you handle "model staleness" in production?**  
+✅ **Answer:**  
+Staleness = model's knowledge becomes outdated.  
+Solutions:
+- **For RAG**: Continuous knowledge base updates
+- **For fine-tuned models**: Scheduled retraining pipelines
+- **Hybrid**: Keep base model static, update only retrieval layer
+- Monitor "unknown topic" rates as staleness signal
+
+**88. What's "circuit breaker pattern" for LLM APIs?**  
+✅ **Answer:**  
+Protective mechanism that stops requests to failing service:
+- Detect failure threshold (e.g., 50% errors in 1 min)
+- Open circuit = reject requests immediately, return cached/fallback response
+- Half-open = periodically test if service recovered
+- Close circuit when service healthy again  
+Prevents cascade failures, improves resilience
+
+**89. How do you implement request batching for LLM inference?**  
+✅ **Answer:**
+- Collect multiple requests over small time window (50-200ms)
+- Send as single batch to LLM API
+- Demultiplex responses back to original requesters
+- Benefits: Higher throughput, better GPU utilization
+- Tradeoff: Slight latency increase vs cost savings
+
+**90. What's your disaster recovery strategy for GenAI systems?**  
+✅ **Answer:**
+- **Vector DB**: Regular snapshots, cross-region replication
+- **Prompt/config**: Version controlled in Git, immutable artifacts
+- **Models**: Multiple API providers, fallback to cached responses
+- **Data**: Backup embeddings, maintain raw document store
+- **Testing**: Regular DR drills, documented runbooks
+
+---
+
+### 🔹 XX. Emerging Patterns & Future-Proofing
+
+**91. What's "constitutional AI" and its architectural implications?**  
+✅ **Answer:**  
+Training approach where AI system follows explicit rules/principles.  
+Architecture impact:
+- Separate policy layer encoding rules
+- Self-critique loops before output
+- Explicit harm prevention checks
+- Hierarchical oversight (human values → AI policies → actions)
+
+**92. How would you architect "collaborative humans + AI agents"?**  
+✅ **Answer:**  
+Hybrid system where:
+- Agents handle routine, high-confidence tasks autonomously
+- Escalate ambiguous cases to humans with full context
+- Humans provide feedback that improves agent behavior
+- Shared workspace with transparent agent reasoning  
+Example: Customer support where agent drafts, human approves/edits
+
+**93. What's "tool discovery" in agentic systems?**  
+✅ **Answer:**  
+Capability for agents to:
+- Discover available tools dynamically from registry
+- Understand tool capabilities via semantic descriptions
+- Compose novel tool chains for unforeseen tasks  
+Implementation: Tool registry with embeddings, agent queries for relevant capabilities
+
+**94. How do you design for "zero-shot tool usage"?**  
+✅ **Answer:**  
+Agent uses tools without prior training on specific tools:
+- Provide detailed tool documentation in prompt
+- Use function-calling with clear parameter schemas
+- Implement retry logic with error message feedback
+- Enable agent to request clarification on ambiguous tools
+
+**95. What's "model-agnostic orchestration" and why does it matter?**  
+✅ **Answer:**  
+Architecture that doesn't depend on specific LLM provider:
+- Unified abstraction layer (LiteLLM, custom adapters)
+- Provider-agnostic prompt formats
+- Portable evaluation metrics
+- Benefits: Avoid vendor lock-in, easy experimentation, cost optimization
+
+**96. How would you implement "federated GenAI" across subsidiaries?**  
+✅ **Answer:**  
+Each subsidiary has local GenAI deployment but:
+- Share common orchestration framework
+- Federated learning updates (aggregated improvements)
+- Central governance but local data sovereignty
+- Shared tool/agent marketplace  
+Architecture: Hub-and-spoke with local autonomy
+
+**97. What's your approach to "continuous prompt optimization"?**  
+✅ **Answer:**  
+Automated system that:
+- Generates prompt variants using meta-prompts
+- Evaluates variants on test sets
+- Promotes best-performing prompts to production
+- Tracks prompt lineage and performance over time  
+Tools: DSPy, Promptfoo, custom genetic algorithms
+
+**98. How do you design for "compositional generalization"?**  
+✅ **Answer:**  
+Ability to handle novel combinations of known concepts:
+- Modular agent design (composition over monoliths)
+- Tool-based approach (combine tools in new ways)
+- Structured intermediate representations
+- Example: Agent trained on "summarize" and "translate" can handle "translate then summarize" without specific training
+
+**99. What's "semantic caching" architecture?**  
+✅ **Answer:**  
+Cache based on meaning similarity, not exact match:
+- Embed incoming query
+- Check vector similarity against cached queries
+- Return cached response if similarity > threshold
+- Hybrid with traditional cache for exact matches  
+Implementation: Redis with vector search, or Momento with semantic capabilities
+
+**100. How would you build "explainable agentic workflows"?**  
+✅ **Answer:**  
+Every agent action produces structured explanation:
+- Decision rationale (why this action?)
+- Evidence sources (what data informed this?)
+- Confidence scores (how certain?)
+- Alternative paths considered  
+Storage: Decision graphs in Neo4j, traces in observability platforms  
+UI: Interactive workflow visualizer showing agent reasoning chains
+
+---
+
+## 🎯 **Meta-Patterns for Exceptional Architects**
+
+Beyond individual Q&As, exceptional candidates demonstrate:
+
+1. **Systems Thinking**: Don't just solve the technical problem—consider organizational, cost, and governance dimensions
+
+2. **Failure Mode Analysis**: For every architecture choice, articulate what can go wrong and mitigation strategies
+
+3. **Evolution Mindset**: Design for change—models will improve, requirements will shift, scale will increase
+
+4. **Business Alignment**: Connect technical decisions to business outcomes (cost, speed, quality, risk)
+
+5. **Ethical Awareness**: Proactively address bias, privacy, transparency without being prompted
+
+6. **Communication Range**: Can explain to executives (business value) and engineers (implementation details)
+
+---
+
+**This augmented set brings the total to 100 comprehensive Q&As covering the full spectrum of GenAI solution architecture in 2025—from foundational concepts to cutting-edge agentic patterns.**
 
 
