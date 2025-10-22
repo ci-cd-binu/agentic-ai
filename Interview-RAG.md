@@ -1,8 +1,58 @@
+
 ## 🧭 GENAI SOLUTION ARCHITECT INTERVIEW Q&A SET
 
 *(2025-ready, enterprise-context focus)*
 
 ---
+### RAG Control Flow & Orchestration
+
+“In a RAG pipeline, the control is typically managed by an orchestrator layer — which could be implemented using a framework like LangChain, LlamaIndex, or a custom orchestration agent.
+
+When the user submits a query, it doesn’t go directly to the LLM. The orchestrator first controls the flow:
+
+Receive & classify the query – The orchestrator decides what kind of query it is (e.g., retrieval-based, generation-only, or tool-invoking).
+
+Check cache or history – It may check an answer cache, conversation history, or a local embedding search to see if this question has already been answered.
+
+Invoke retriever – If not, the orchestrator sends the user query (or its embedding) to the retriever module, which performs vector similarity search (via FAISS, Chroma, Pinecone, etc.) to get top-N relevant chunks.
+
+Compose context & prompt – The orchestrator then constructs the final prompt by combining user input + retrieved context + system instructions (prompt template).
+
+Call the LLM – Only now does the orchestrator send this composed input to the LLM endpoint.
+
+Post-process results – After receiving the LLM’s response, it may apply guardrails, re-ranking, summarization, or structured formatting before showing to the user.
+
+So in short — the retriever doesn’t control the flow, and neither does the LLM; it’s the RAG pipeline controller (the orchestrator/agent framework) that coordinates all stages and ensures proper hand-off between modules.”
+
+🧠 Bonus Point — If Interviewer Digs Deeper
+
+You can extend with this insight:
+
+### Control Ownership:
+
+    Application Layer (e.g., FastAPI/Flask) handles request orchestration and logging.
+
+    LLM Orchestrator (LangChain, LlamaIndex, Semantic Kernel) manages retrieval + prompt assembly.
+
+    Vector DB only serves retrieval; it’s passive.
+
+    LLM is reactive — it only generates based on inputs it receives.
+
+#### Flow Example (Visualized):
+
+User → App Controller → Orchestrator (LangChain) 
+     → Retriever (Vector DB)
+     → Context Builder → LLM 
+     → Postprocessor → Response → User
+
+
+ Governance and Control Checks:
+
+ Guardrails (semantic filters, sensitive info checks)
+
+ Prompt policies and template control
+
+ Logging and feedback loops for improvement
 
 ### 🔹 I. Architecture Fundamentals (Concept & Flow)
 
