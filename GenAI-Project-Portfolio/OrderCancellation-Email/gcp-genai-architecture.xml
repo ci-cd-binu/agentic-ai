@@ -1,0 +1,65 @@
+<mxfile host="app.diagrams.net" modified="2025-05-13T12:00:00Z" agent="Grok 3" version="1.0" etag="xyz123">
+  <diagram name="GCP GenAI Architecture" id="gcp-genai-diagram">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" background="#ffffff">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="2" value="Order Management System" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f4f4f4;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="3" value="BigQuery: Order & Historical Data" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#FFE599;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="250" y="300" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="4" value="Analytics & storage" style="text;html=1;strokeColor=none;fillColor=none;align=center;whiteSpace=wrap;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="250" y="360" width="140" height="20"/>
+        </mxCell>
+        <mxCell id="5" value="Pub/Sub: Event Trigger" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#B6D7A8;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="450" y="300" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="6" value="Vertex AI: Cancellation Prediction" style="shape=hexagon;whiteSpace=wrap;html=1;fillColor=#A4C2F4;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="650" y="300" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="7" value="Vertex AI: GenAI Email Intervention" style="shape=hexagon;whiteSpace=wrap;html=1;fillColor=#A4C2F4;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="850" y="300" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="8" value="Cloud Run: Email Draft Processing" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#F9CB9C;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="300" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="9" value="App Engine: Dealer Dashboard" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6B8AF;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="420" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="10" value="Firestore: Email Drafts, Metadata, History" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#D5A6BD;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="850" y="420" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="11" value="Real-time queries" style="text;html=1;strokeColor=none;fillColor=none;align=center;whiteSpace=wrap;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="850" y="480" width="140" height="20"/>
+        </mxCell>
+        <mxCell id="12" value="SendGrid: Email Delivery" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="650" y="420" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="13" value="Customer" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="450" y="420" width="60" height="80"/>
+        </mxCell>
+        <mxCell id="14" value="Cloud Monitoring/Logging" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#C9DAF8;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="250" y="420" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="15" value="Cloud Storage: Attachments (Optional)" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#A2C4C9;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="450" y="540" width="140" height="60"/>
+        </mxCell>
+        <mxCell id="16" value="Large file storage" style="text;html=1;strokeColor=none;fillColor=none;align=center;whiteSpace=wrap;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="450" y="600" width="140" height="20"/>
+        </mxCell>
+        <mxCell id="17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="2" target="3"/>
+        <mxCell id="18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="3" target="5"/>
+        <mxCell id="19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="5" target="6"/>
+        <mxCell id="20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="6" target="7"/>
+        <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="7" target="8"/>
+        <mxCell id="22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="8" target="10"/>
+        <mxCell id="23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="10" target="12"/>
+        <mxCell id="24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="12" target="13"/>
+        <mxCell id="25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="13" target="14"/>
+        <mxCell id="26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" edge="1" parent="1" source="10" target="15"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
